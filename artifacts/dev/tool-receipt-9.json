@@ -1,0 +1,10 @@
+{
+  "n": 9,
+  "tool": "writeFile",
+  "input": {
+    "path": "src/db/models.ts",
+    "content": "import {\n  Entity,\n  PrimaryGeneratedColumn,\n  Column,\n  ManyToOne,\n  OneToMany,\n  CreateDateColumn,\n  Unique\n} from 'typeorm';\n\n@Entity()\nexport class User {\n  @PrimaryGeneratedColumn('uuid')\n  id!: string;\n\n  @Column({ unique: true })\n  email!: string;\n\n  @Column()\n  passwordHash!: string;\n\n  @Column({ default: 'UTC' })\n  timezone!: string;\n\n  @Column({ nullable: true })\n  phoneNumber?: string;\n\n  @Column({ nullable: true })\n  telegramChatId?: string;\n\n  @Column({ nullable: true })\n  whatsappNumber?: string;\n\n  @OneToMany(() => Habit, (habit) => habit.user)\n  habits!: Habit[];\n}\n\n@Entity()\n@Unique(['user', 'name'])\nexport class Habit {\n  @PrimaryGeneratedColumn('uuid')\n  id!: string;\n\n  @ManyToOne(() => User, (user) => user.habits, { onDelete: 'CASCADE' })\n  user!: User;\n\n  @Column()\n  name!: string;\n\n  @Column({ nullable: true })\n  goal?: string;\n\n  @Column({ default: true })\n  isActive!: boolean;\n\n  @Column({ default: 0 })\n  currentStreak!: number;\n\n  @OneToMany(() => HabitCompletion, (completion) => completion.habit)\n  completions!: HabitCompletion[];\n\n  @OneToMany(() => Reminder, (reminder) => reminder.habit)\n  reminders!: Reminder[];\n}\n\n@Entity()\nexport class HabitCompletion {\n  @PrimaryGeneratedColumn('uuid')\n  id!: string;\n\n  @ManyToOne(() => Habit, (habit) => habit.completions, { onDelete: 'CASCADE' })\n  habit!: Habit;\n\n  @CreateDateColumn()\n  completedAt!: Date;\n}\n\n@Entity()\nexport class Reminder {\n  @PrimaryGeneratedColumn('uuid')\n  id!: string;\n\n  @ManyToOne(() => Habit, (habit) => habit.reminders, { onDelete: 'CASCADE' })\n  habit!: Habit;\n\n  @Column()\n  time!: string;\n\n  @Column({ default: 'daily' })\n  frequency!: string;\n\n  @Column({ default: 'sms' })\n  channel!: 'sms' | 'telegram' | 'whatsapp';\n}\n"
+  },
+  "result": "OK: wrote 1742 bytes to src/db/models.ts",
+  "tsIso": "2026-03-18T03:51:00.314Z"
+}

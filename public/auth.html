@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up / Login - Commed Habitude</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <h1>Commed Habitude</h1>
+            <p class="tagline">Build better habits, one day at a time</p>
+
+            <!-- Signup Form -->
+            <div id="signup-form" class="auth-form">
+                <h2>Get Started</h2>
+                <p class="form-description">Choose your preferred messaging channel to receive reminders</p>
+
+                <div class="form-group">
+                    <label for="messaging-channel">Messaging Channel</label>
+                    <select id="messaging-channel" required>
+                        <option value="">Select a channel...</option>
+                        <option value="sms">SMS</option>
+                        <option value="telegram">Telegram</option>
+                        <option value="whatsapp">WhatsApp</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="identifier-group" style="display: none;">
+                    <label for="channel-identifier" id="identifier-label">Phone Number</label>
+                    <input type="text" id="channel-identifier" placeholder="+1234567890">
+                    <small class="form-hint" id="identifier-hint">Enter your phone number with country code</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="timezone">Timezone</label>
+                    <select id="timezone" required>
+                        <option value="">Select your timezone...</option>
+                        <option value="America/New_York">Eastern Time (ET)</option>
+                        <option value="America/Chicago">Central Time (CT)</option>
+                        <option value="America/Denver">Mountain Time (MT)</option>
+                        <option value="America/Los_Angeles">Pacific Time (PT)</option>
+                        <option value="America/Anchorage">Alaska Time (AKT)</option>
+                        <option value="Pacific/Honolulu">Hawaii Time (HT)</option>
+                        <option value="Europe/London">London (GMT)</option>
+                        <option value="Europe/Paris">Paris (CET)</option>
+                        <option value="Europe/Berlin">Berlin (CET)</option>
+                        <option value="Asia/Tokyo">Tokyo (JST)</option>
+                        <option value="Asia/Shanghai">Shanghai (CST)</option>
+                        <option value="Asia/Dubai">Dubai (GST)</option>
+                        <option value="Australia/Sydney">Sydney (AEDT)</option>
+                    </select>
+                </div>
+
+                <button id="signup-btn" class="btn btn-primary" disabled>Send Verification Code</button>
+
+                <p class="form-footer">
+                    Already have an account? <a href="#" id="show-login">Login</a>
+                </p>
+            </div>
+
+            <!-- Login Form -->
+            <div id="login-form" class="auth-form" style="display: none;">
+                <h2>Welcome Back</h2>
+                <p class="form-description">Enter your channel identifier to receive a verification code</p>
+
+                <div class="form-group">
+                    <label for="login-identifier">Phone Number or Chat ID</label>
+                    <input type="text" id="login-identifier" placeholder="+1234567890">
+                </div>
+
+                <button id="login-btn" class="btn btn-primary">Send Verification Code</button>
+
+                <p class="form-footer">
+                    Don't have an account? <a href="#" id="show-signup">Sign Up</a>
+                </p>
+            </div>
+
+            <!-- Verification Form -->
+            <div id="verification-form" class="auth-form" style="display: none;">
+                <h2>Verify Your Account</h2>
+                <p class="form-description">Enter the 6-digit code sent to your messaging channel</p>
+
+                <div class="form-group">
+                    <label for="verification-code">Verification Code</label>
+                    <input type="text" id="verification-code" maxlength="6" placeholder="000000">
+                </div>
+
+                <button id="verify-btn" class="btn btn-primary">Verify</button>
+
+                <p class="form-footer">
+                    <a href="#" id="back-to-signup">Back to signup</a>
+                </p>
+            </div>
+
+            <div id="error-message" class="error-message" style="display: none;"></div>
+            <div id="success-message" class="success-message" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script src="/auth.js"></script>
+</body>
+</html>

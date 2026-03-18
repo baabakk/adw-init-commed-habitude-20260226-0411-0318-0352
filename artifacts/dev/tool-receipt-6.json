@@ -1,0 +1,10 @@
+{
+  "n": 6,
+  "tool": "writeFile",
+  "input": {
+    "path": "src/adapters/smsAdapter.ts",
+    "content": "export class SmsAdapter {\n  async sendMessage(to: string, message: string): Promise<void> {\n    if (!to) throw new Error('SMS recipient is required');\n    console.log(`[SMS] Sending to ${to}: ${message}`);\n  }\n}\n"
+  },
+  "result": "OK: wrote 212 bytes to src/adapters/smsAdapter.ts",
+  "tsIso": "2026-03-18T03:50:48.893Z"
+}

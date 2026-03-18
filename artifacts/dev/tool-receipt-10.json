@@ -1,0 +1,10 @@
+{
+  "n": 10,
+  "tool": "writeFile",
+  "input": {
+    "path": "src/db/connection.ts",
+    "content": "import 'reflect-metadata';\nimport { DataSource } from 'typeorm';\nimport { Habit, HabitCompletion, Reminder, User } from './models';\n\nexport const AppDataSource = new DataSource({\n  type: 'postgres',\n  host: process.env.DB_HOST || 'localhost',\n  port: Number(process.env.DB_PORT || 5432),\n  username: process.env.DB_USER || 'postgres',\n  password: process.env.DB_PASSWORD || 'postgres',\n  database: process.env.DB_NAME || 'habitude',\n  synchronize: true,\n  logging: false,\n  entities: [User, Habit, HabitCompletion, Reminder]\n});\n\nexport async function initializeDatabase(): Promise<void> {\n  if (!AppDataSource.isInitialized) {\n    await AppDataSource.initialize();\n    console.log('Database connected');\n  }\n}\n"
+  },
+  "result": "OK: wrote 711 bytes to src/db/connection.ts",
+  "tsIso": "2026-03-18T03:51:03.152Z"
+}

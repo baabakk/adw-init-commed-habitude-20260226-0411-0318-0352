@@ -1,0 +1,10 @@
+{
+  "n": 26,
+  "tool": "writeFile",
+  "input": {
+    "path": "frontend/App.tsx",
+    "content": "import React, { useEffect, useState } from 'react';\nimport HabitForm from './components/HabitForm';\nimport HabitList from './components/HabitList';\nimport ProgressChart from './components/ProgressChart';\nimport ReminderSettings from './components/ReminderSettings';\nimport { apiRequest } from './utils/apiClient';\n\ntype Habit = { id: string; name: string; currentStreak: number };\n\ntype ProgressResponse = { habitId: string; days: number; data: { date: string; value: number }[] };\n\nexport default function App(): JSX.Element {\n  const [habits, setHabits] = useState<Habit[]>([]);\n  const [progress, setProgress] = useState<{ date: string; value: number }[]>([]);\n  const [error, setError] = useState('');\n\n  const loadHabits = async () => {\n    try {\n      const data = await apiRequest<Habit[]>('/habits');\n      setHabits(data);\n      if (data[0]) {\n        const p = await apiRequest<ProgressResponse>(`/progress/${data[0].id}`);\n        setProgress(p.data);\n      }\n    } catch (e) {\n      setError((e as Error).message);\n    }\n  };\n\n  useEffect(() => {\n    loadHabits();\n  }, []);\n\n  return (\n    <div>\n      <h1>Habitude</h1>\n      {error && <div className=\"card\" style={{ color: '#b91c1c' }}>{error}</div>}\n      <HabitForm onCreate={async (payload) => {\n        await apiRequest('/habits', { method: 'POST', body: JSON.stringify(payload) });\n        await loadHabits();\n      }} />\n      <ReminderSettings habits={habits} onCreateReminder={async (payload) => {\n        await apiRequest('/reminders', { method: 'POST', body: JSON.stringify(payload) });\n      }} />\n      <HabitList habits={habits} onComplete={async (habitId) => {\n        await apiRequest(`/habits/${habitId}/complete`, { method: 'POST' });\n        await loadHabits();\n      }} />\n      <ProgressChart data={progress} />\n    </div>\n  );\n}\n"
+  },
+  "result": "OK: wrote 1814 bytes to frontend/App.tsx",
+  "tsIso": "2026-03-18T03:52:19.511Z"
+}

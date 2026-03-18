@@ -1,0 +1,10 @@
+{
+  "n": 23,
+  "tool": "writeFile",
+  "input": {
+    "path": "frontend/components/HabitList.tsx",
+    "content": "import React from 'react';\n\ntype Habit = { id: string; name: string; currentStreak: number };\n\ntype Props = {\n  habits: Habit[];\n  onComplete: (habitId: string) => Promise<void>;\n};\n\nexport default function HabitList({ habits, onComplete }: Props): JSX.Element {\n  return (\n    <div className=\"card\">\n      <h3>Your Habits</h3>\n      <ul>\n        {habits.map((habit) => (\n          <li key={habit.id}>\n            <span>\n              {habit.name} — 🔥 {habit.currentStreak}\n            </span>\n            <button onClick={() => onComplete(habit.id)}>Complete</button>\n          </li>\n        ))}\n      </ul>\n    </div>\n  );\n}\n"
+  },
+  "result": "OK: wrote 628 bytes to frontend/components/HabitList.tsx",
+  "tsIso": "2026-03-18T03:52:02.295Z"
+}

@@ -1,0 +1,9 @@
+{
+  "n": 38,
+  "tool": "listFiles",
+  "input": {
+    "glob": "src/*.ts"
+  },
+  "result": "src/config.ts\nsrc/database.ts\nsrc/habitService.ts\nsrc/messagingService.ts\nsrc/models.ts\nsrc/reminderService.ts\nsrc/server.ts\nsrc/smsProvider.ts\nsrc/telegramProvider.ts\nsrc/types.d.ts\nsrc/whatsappProvider.ts",
+  "tsIso": "2026-02-27T06:15:11.123Z"
+}

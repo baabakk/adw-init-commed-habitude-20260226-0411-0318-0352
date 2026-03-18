@@ -1,0 +1,178 @@
+{
+  "version": "1.0",
+  "interfaces": [
+    {
+      "name": "Habit CRUD API",
+      "type": "api",
+      "description": "RESTful interface for creating, reading, updating, and deleting user habits",
+      "contract": "Supports POST /habits, GET /habits/{id}, PUT /habits/{id}, DELETE /habits/{id}; requires user authentication; returns habit details including name, schedule, and completion status"
+    },
+    {
+      "name": "Reminder Scheduler",
+      "type": "api",
+      "description": "Service to register, update, and cancel scheduled reminders based on user-defined times",
+      "contract": "Accepts habit ID, user ID, and schedule (cron-like); triggers Reminder Delivery Service at scheduled time; handles timezone-aware scheduling"
+    },
+    {
+      "name": "Reminder Delivery Service",
+      "type": "api",
+      "description": "Orchestrates delivery of reminders via configured messaging platforms",
+      "contract": "Receives trigger from Reminder Scheduler; routes message to SMS, Telegram, or WhatsApp based on user preference; implements retry logic on failure"
+    },
+    {
+      "name": "Messaging Platform Adapters",
+      "type": "api",
+      "description": "Wrapper services for external messaging APIs (SMS, Telegram, WhatsApp)",
+      "contract": "Abstracts vendor-specific APIs; standardizes message format and error handling; enforces rate limit compliance"
+    },
+    {
+      "name": "Progress Chart Data API",
+      "type": "api",
+      "description": "Provides time-series habit completion data for chart rendering",
+      "contract": "GET /habits/{id}/progress?range=30d; returns daily completion status; supports aggregation by week/month"
+    },
+    {
+      "name": "Streak Calculation Engine",
+      "type": "event",
+      "description": "Listens to habit completion events and computes current streaks",
+      "contract": "Consumes 'HabitCompleted' event; updates streak count; emits 'StreakUpdated' and 'StreakThresholdReached' events"
+    },
+    {
+      "name": "User Authentication Service",
+      "type": "api",
+      "description": "Handles user login, session management, and identity verification",
+      "contract": "OAuth2 or JWT-based; integrates with frontend and all backend services"
+    },
+    {
+      "name": "Frontend Web Application",
+      "type": "shared-lib",
+      "description": "UI components and state management for habit tracking",
+      "contract": "React-based; consumes Habit CRUD API, Progress Chart Data API, and Streak Calculation Engine outputs"
+    }
+  ],
+  "dataContracts": [
+    {
+      "entity": "Habit",
+      "storage": "PostgreSQL",
+      "ownership": "Habit Management Service",
+      "notes": "Includes name, description, reminder schedule, creation date, and associated goal (optional)"
+    },
+    {
+      "entity": "User",
+      "storage": "PostgreSQL",
+      "ownership": "User Management Service",
+      "notes": "Stores user ID, authentication tokens, preferred messaging channels, and contact identifiers (phone, Telegram ID, WhatsApp number)"
+    },
+    {
+      "entity": "HabitCompletion",
+      "storage": "PostgreSQL",
+      "ownership": "Habit Tracking Service",
+      "notes": "Daily record of whether a habit was completed; used for progress charts and streak calculation"
+    },
+    {
+      "entity": "ReminderSchedule",
+      "storage": "PostgreSQL",
+      "ownership": "Reminder Scheduler",
+      "notes": "Maps habits to delivery times and channels; supports recurring schedules"
+    },
+    {
+      "entity": "Streak",
+      "storage": "PostgreSQL",
+      "ownership": "Streak Calculation Engine",
+      "notes": "Tracks current consecutive days of habit completion; resets on missed day"
+    },
+    {
+      "entity": "MessagingEventLog",
+      "storage": "PostgreSQL",
+      "ownership": "Reminder Delivery Service",
+      "notes": "Logs all reminder delivery attempts, successes, failures; used for monitoring and retry"
+    }
+  ],
+  "scalability": {
+    "expectedLoad": "10K concurrent users, 100K daily active users, average 3 habits per user, peak reminder bursts at 8-9 AM and 6-7 PM",
+    "bottlenecks": [
+      "Messaging platform API rate limits during peak hours",
+      "Streak recalculation under high write load",
+      "Chart data queries over large date ranges",
+      "Reminder delivery orchestration at scale"
+    ],
+    "mitigations": [
+      "Implement message queuing (e.g., SQS) for reminder delivery with backpressure",
+      "Use caching (Redis) for streak and progress data",
+      "Paginate and pre-aggregate chart data",
+      "Distribute scheduling with worker pools and time-sharded jobs"
+    ]
+  },
+  "securityBaseline": {
+    "authMethod": "JWT with refresh tokens, secured over HTTPS",
+    "dataClassification": "PII (phone numbers, messaging IDs), user behavior data (habit completions)",
+    "threatVectors": [
+      "Unauthorized access to habit and streak data",
+      "Credential leakage in messaging integrations",
+      "SMS spoofing or phishing via reminder messages",
+      "Rate limiting abuse on public endpoints",
+      "Data exfiltration via insecure chart data API"
+    ],
+    "mitigations": [
+      "Encrypt PII at rest and in transit",
+      "Rotate API keys for external messaging services",
+      "Validate and sanitize all user inputs",
+      "Enforce strict CORS and rate limiting on APIs",
+      "Audit log all data access and modification"
+    ]
+  },
+  "adrs": [
+    {
+      "id": "ADR-001",
+      "title": "Adopt RESTful APIs for internal service communication",
+      "status": "accepted",
+      "context": "FR-01, FR-02, FR-08 require reliable CRUD operations; NFR-04 requires web accessibility; internal dependencies include multiple services needing interoperability",
+      "decision": "Use REST over HTTP with JSON payloads for all internal service APIs",
+      "consequences": "Simplifies frontend integration and debugging; may require additional effort to enforce consistency across services"
+    },
+    {
+      "id": "ADR-002",
+      "title": "Implement event-driven streak calculation",
+      "status": "accepted",
+      "context": "FR-04 and FR-10 require real-time streak updates; AC-04 and AC-05 demand immediate feedback on habit completion",
+      "decision": "Use event sourcing pattern: emit 'HabitCompleted' event on completion; consume by Streak Calculation Engine",
+      "consequences": "Enables reliable streak tracking and notifications; adds complexity with message broker dependency"
+    },
+    {
+      "id": "ADR-003",
+      "title": "Abstract external messaging APIs behind adapter layer",
+      "status": "accepted",
+      "context": "FR-05, FR-06, FR-07 and NFR-01 require reliable delivery across SMS, Telegram, WhatsApp; externalDependencies list high-risk integrations with rate limits",
+      "decision": "Build adapter services per platform to normalize message sending, error handling, and retry logic",
+      "consequences": "Improves resilience and testability; increases operational overhead for monitoring each adapter"
+    },
+    {
+      "id": "ADR-004",
+      "title": "Use PostgreSQL as single source of truth for core entities",
+      "status": "accepted",
+      "context": "FR-01, FR-02, FR-08 require durable storage; internalDependencies include data storage and retrieval needs",
+      "decision": "Store Habit, User, HabitCompletion, Streak, and ReminderSchedule in PostgreSQL with proper indexing",
+      "consequences": "Ensures ACID compliance and referential integrity; may require read replicas for scaling analytics queries"
+    }
+  ],
+  "metadata": {
+    "derivedFrom": "tpm-contract.json",
+    "confidenceMap": {
+      "interfaces": "inferred",
+      "dataContracts": "inferred",
+      "scalability": "assumed",
+      "securityBaseline": "inferred",
+      "adrs": "inferred"
+    },
+    "gaps": [
+      "No user authentication requirements specified in contract",
+      "Lack of defined data retention policies",
+      "No explicit performance SLAs for API response times",
+      "Missing compliance requirements (e.g., GDPR, TCPA for SMS)",
+      "No disaster recovery or backup strategy documented",
+      "Undefined fallback behavior for failed message deliveries",
+      "No internationalization or timezone handling details",
+      "Unspecified cost constraints for external API usage"
+    ]
+  }
+}

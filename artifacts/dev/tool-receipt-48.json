@@ -1,0 +1,9 @@
+{
+  "n": 48,
+  "tool": "listFiles",
+  "input": {
+    "glob": "src/services/*.ts"
+  },
+  "result": "src/services/messaging-gateway.ts\nsrc/services/reminder-scheduler.ts\nsrc/services/sms-provider.ts\nsrc/services/telegram-provider.ts\nsrc/services/whatsapp-provider.ts",
+  "tsIso": "2026-02-27T06:18:37.011Z"
+}

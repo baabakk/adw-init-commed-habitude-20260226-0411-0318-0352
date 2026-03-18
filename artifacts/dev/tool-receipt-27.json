@@ -1,0 +1,10 @@
+{
+  "n": 27,
+  "tool": "writeFile",
+  "input": {
+    "path": "README.md",
+    "content": "# Habitude (init-commed-habitude-20260226-0411)\n\nHabitude is a full-stack habit tracking application with:\n- Habit CRUD and completion tracking\n- Event-driven streak updates via `HabitCompleted` events\n- Reminder scheduling and delivery through adapter-based SMS, Telegram, and WhatsApp integrations\n- Progress chart data API and React frontend visualization\n- JWT-protected REST APIs\n- PostgreSQL as the source of truth\n\n## Tech Stack\n- Backend: Node.js, Express, TypeScript, TypeORM, PostgreSQL\n- Frontend: React + TypeScript\n\n## Setup\n1. Install dependencies:\n   ```bash\n   npm install\n   ```\n2. Configure environment variables:\n   - `PORT` (default: 4000)\n   - `JWT_SECRET`\n   - `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`\n3. Run in development:\n   ```bash\n   npm run dev\n   ```\n4. Build:\n   ```bash\n   npm run build\n   ```\n\n## API Overview\nAll API routes require `Authorization: Bearer <jwt>`.\n\n- `GET /api/habits` - list habits\n- `POST /api/habits` - create habit\n- `PUT /api/habits/:id` - update habit\n- `DELETE /api/habits/:id` - delete habit\n- `POST /api/habits/:id/complete` - mark habit complete (emits `HabitCompleted`)\n- `POST /api/reminders` - create reminder\n- `GET /api/reminders` - list reminders\n- `POST /api/reminders/:id/send-test` - send test reminder\n- `GET /api/progress/:habitId?days=30` - progress chart data\n\n## Architecture Notes\n- ADR-001: REST APIs are used for all service communication.\n- ADR-002: Streak updates are event-driven in `streakService` via internal event bus.\n- ADR-003: Messaging integrations are isolated in adapter classes and use retry logic.\n- ADR-004: PostgreSQL (via TypeORM) stores all core entities.\n\n## Frontend\nFrontend source is in `frontend/` and consumes backend API contracts through `frontend/utils/apiClient.ts`.\n"
+  },
+  "result": "OK: wrote 1788 bytes to README.md",
+  "tsIso": "2026-03-18T03:52:25.995Z"
+}

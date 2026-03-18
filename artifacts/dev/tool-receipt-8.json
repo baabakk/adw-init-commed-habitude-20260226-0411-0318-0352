@@ -1,0 +1,10 @@
+{
+  "n": 8,
+  "tool": "writeFile",
+  "input": {
+    "path": "src/adapters/whatsappAdapter.ts",
+    "content": "export class WhatsAppAdapter {\n  async sendMessage(to: string, message: string): Promise<void> {\n    if (!to) throw new Error('WhatsApp recipient is required');\n    console.log(`[WhatsApp] Sending to ${to}: ${message}`);\n  }\n}\n"
+  },
+  "result": "OK: wrote 227 bytes to src/adapters/whatsappAdapter.ts",
+  "tsIso": "2026-03-18T03:50:51.958Z"
+}

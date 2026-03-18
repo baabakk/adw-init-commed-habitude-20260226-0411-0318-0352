@@ -1,0 +1,10 @@
+{
+  "n": 5,
+  "tool": "writeFile",
+  "input": {
+    "path": "src/utils/timezoneUtils.ts",
+    "content": "export function toUserDate(date: Date, timezone: string): string {\n  return new Intl.DateTimeFormat('en-CA', {\n    timeZone: timezone,\n    year: 'numeric',\n    month: '2-digit',\n    day: '2-digit'\n  }).format(date);\n}\n\nexport function isConsecutiveDay(previous: Date, current: Date, timezone: string): boolean {\n  const prev = new Date(toUserDate(previous, timezone));\n  const curr = new Date(toUserDate(current, timezone));\n  const diff = (curr.getTime() - prev.getTime()) / (1000 * 60 * 60 * 24);\n  return diff === 1;\n}\n"
+  },
+  "result": "OK: wrote 522 bytes to src/utils/timezoneUtils.ts",
+  "tsIso": "2026-03-18T03:50:47.289Z"
+}

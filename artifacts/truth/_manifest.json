@@ -1,0 +1,38 @@
+{
+  "initiativeId": "init-commed-habitude-20260226-0411",
+  "artifacts": {
+    "arch-guardrails": {
+      "name": "arch-guardrails",
+      "currentVersion": 1,
+      "format": "json",
+      "history": [
+        {
+          "version": 1,
+          "uri": "file:///data/artifacts/init-commed-habitude-20260226-0411/truth/arch-guardrails.v1.json",
+          "approvedBy": "tpm",
+          "approvedAtIso": "2026-02-26T06:54:43.032Z"
+        }
+      ]
+    },
+    "dev-plan": {
+      "name": "dev-plan",
+      "currentVersion": 2,
+      "format": "json",
+      "history": [
+        {
+          "version": 1,
+          "uri": "file:///data/artifacts/init-commed-habitude-20260226-0411/truth/dev-plan.v1.json",
+          "approvedBy": "tpm",
+          "approvedAtIso": "2026-02-27T06:03:47.390Z"
+        },
+        {
+          "version": 2,
+          "uri": "file:///data/artifacts/init-commed-habitude-20260226-0411/truth/dev-plan.v2.json",
+          "approvedBy": "tpm",
+          "approvedAtIso": "2026-02-28T06:28:00.663Z"
+        }
+      ]
+    }
+  },
+  "updatedAtIso": "2026-02-28T06:28:00.663Z"
+}

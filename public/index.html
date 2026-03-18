@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Habit Tracker</title>
+  <link rel="stylesheet" href="/public/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Habit Tracker</h1>
+      <p>Build better habits with timely reminders and progress tracking</p>
+    </header>
+
+    <main>
+      <section class="create-habit">
+        <h2>Create New Habit</h2>
+        <form id="habitForm">
+          <input type="text" id="habitName" placeholder="e.g., Drink water" required />
+          
+          <div class="time-channel-group">
+            <div class="time-input">
+              <label for="reminderTime">Reminder Time</label>
+              <input type="time" id="reminderTime" required />
+            </div>
+            
+            <div class="channel-input">
+              <label>Reminder Channels</label>
+              <div class="checkbox-group">
+                <label><input type="checkbox" value="sms" checked> SMS</label>
+                <label><input type="checkbox" value="telegram"> Telegram</label>
+                <label><input type="checkbox" value="whatsapp"> WhatsApp</label>
+              </div>
+            </div>
+          </div>
+          
+          <button type="submit">Create Habit</button>
+        </form>
+      </section>
+
+      <section class="habits-list">
+        <h2>Your Habits</h2>
+        <div id="habitsContainer">
+          <!-- Habits will be inserted here -->
+          <p class="empty-state">No habits yet. Create one above!</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/public/app.js"></script>
+  <script src="/public/chart.js"></script>
+</body>
+</html>
