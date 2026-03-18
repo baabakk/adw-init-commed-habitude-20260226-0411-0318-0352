@@ -1,0 +1,10 @@
+{
+  "n": 19,
+  "tool": "writeFile",
+  "input": {
+    "path": "frontend/index.html",
+    "content": "<!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>Habitude</title>\n    <style>\n      body { font-family: Arial, sans-serif; margin: 0; background: #f5f7fb; color: #1f2937; }\n      #root { max-width: 960px; margin: 0 auto; padding: 1rem; }\n      .card { background: white; border-radius: 10px; padding: 1rem; margin-bottom: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }\n      input, select, button { padding: 0.5rem; margin: 0.25rem; }\n      button { background: #2563eb; color: white; border: none; border-radius: 6px; cursor: pointer; }\n      button:disabled { background: #9ca3af; }\n      ul { list-style: none; padding: 0; }\n      li { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid #e5e7eb; }\n    </style>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n    <script type=\"module\" src=\"./main.tsx\"></script>\n  </body>\n</html>\n"
+  },
+  "result": "OK: wrote 1002 bytes to frontend/index.html",
+  "tsIso": "2026-03-18T03:51:51.216Z"
+}

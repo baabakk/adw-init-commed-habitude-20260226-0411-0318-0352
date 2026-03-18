@@ -1,0 +1,10 @@
+{
+  "n": 59,
+  "tool": "writeFile",
+  "input": {
+    "path": "tsconfig.json",
+    "content": "{\n  \"compilerOptions\": {\n    \"target\": \"ES2020\",\n    \"module\": \"commonjs\",\n    \"lib\": [\"ES2020\"],\n    \"outDir\": \"./dist\",\n    \"rootDir\": \"./src\",\n    \"strict\": false,\n    \"esModuleInterop\": true,\n    \"skipLibCheck\": true,\n    \"forceConsistentCasingInFileNames\": true,\n    \"resolveJsonModule\": true,\n    \"moduleResolution\": \"node\",\n    \"declaration\": true,\n    \"declarationMap\": true,\n    \"sourceMap\": true,\n    \"noUnusedLocals\": false,\n    \"noUnusedParameters\": false,\n    \"noImplicitReturns\": false,\n    \"noFallthroughCasesInSwitch\": true,\n    \"noImplicitAny\": false,\n    \"typeRoots\": [\"./node_modules/@types\", \"./src/types\"]\n  },\n  \"include\": [\n    \"src/config.ts\",\n    \"src/database.ts\",\n    \"src/server.ts\",\n    \"src/models/habit.ts\",\n    \"src/models/user.ts\",\n    \"src/routes/habits.ts\",\n    \"src/routes/users.ts\",\n    \"src/routes/analytics.ts\",\n    \"src/services/messaging-gateway.ts\",\n    \"src/services/reminder-scheduler.ts\",\n    \"src/services/sms-provider.ts\",\n    \"src/services/telegram-provider.ts\",\n    \"src/services/whatsapp-provider.ts\",\n    \"src/middleware/error-handler.ts\",\n    \"src/types/**/*\"\n  ],\n  \"exclude\": [\n    \"node_modules\",\n    \"dist\"\n  ]\n}\n"
+  },
+  "result": "OK: wrote 1169 bytes to tsconfig.json",
+  "tsIso": "2026-02-27T06:17:45.826Z"
+}

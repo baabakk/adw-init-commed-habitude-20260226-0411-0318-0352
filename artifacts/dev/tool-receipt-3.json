@@ -1,0 +1,10 @@
+{
+  "n": 3,
+  "tool": "writeFile",
+  "input": {
+    "path": "src/events/eventEmitter.ts",
+    "content": "import { EventEmitter } from 'events';\n\nexport type HabitCompletedEvent = {\n  userId: string;\n  habitId: string;\n  completedAt: Date;\n};\n\nclass AppEventEmitter extends EventEmitter {}\n\nexport const eventBus = new AppEventEmitter();\n\nexport const EVENTS = {\n  HABIT_COMPLETED: 'HabitCompleted'\n} as const;\n"
+  },
+  "result": "OK: wrote 305 bytes to src/events/eventEmitter.ts",
+  "tsIso": "2026-03-18T03:50:47.288Z"
+}

@@ -1,0 +1,10 @@
+{
+  "n": 17,
+  "tool": "writeFile",
+  "input": {
+    "path": "src/app.ts",
+    "content": "import express from 'express';\nimport cors from 'cors';\nimport habitRoutes from './routes/habitRoutes';\nimport reminderRoutes from './routes/reminderRoutes';\nimport progressRoutes from './routes/progressRoutes';\nimport { authMiddleware } from './middleware/auth';\n\nconst app = express();\n\napp.use(cors());\napp.use(express.json());\n\napp.get('/health', (_req, res) => {\n  res.json({ status: 'ok' });\n});\n\napp.use('/api/habits', authMiddleware, habitRoutes);\napp.use('/api/reminders', authMiddleware, reminderRoutes);\napp.use('/api/progress', authMiddleware, progressRoutes);\n\napp.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {\n  console.error(err);\n  res.status(500).json({ error: 'Internal server error' });\n});\n\nexport default app;\n"
+  },
+  "result": "OK: wrote 782 bytes to src/app.ts",
+  "tsIso": "2026-03-18T03:51:44.090Z"
+}

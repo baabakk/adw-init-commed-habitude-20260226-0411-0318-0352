@@ -1,0 +1,10 @@
+{
+  "n": 12,
+  "tool": "writeFile",
+  "input": {
+    "path": "src/services/streakService.ts",
+    "content": "import { AppDataSource } from '../db/connection';\nimport { Habit, HabitCompletion } from '../db/models';\nimport { EVENTS, HabitCompletedEvent, eventBus } from '../events/eventEmitter';\nimport { isConsecutiveDay } from '../utils/timezoneUtils';\n\nexport function registerStreakHandlers(): void {\n  eventBus.on(EVENTS.HABIT_COMPLETED, async (event: HabitCompletedEvent) => {\n    const habitRepo = AppDataSource.getRepository(Habit);\n    const completionRepo = AppDataSource.getRepository(HabitCompletion);\n\n    const habit = await habitRepo.findOne({\n      where: { id: event.habitId },\n      relations: ['user']\n    });\n\n    if (!habit) return;\n\n    const completions = await completionRepo.find({\n      where: { habit: { id: habit.id } },\n      order: { completedAt: 'DESC' },\n      take: 2\n    });\n\n    if (completions.length < 2) {\n      habit.currentStreak = 1;\n    } else {\n      const [latest, previous] = completions;\n      habit.currentStreak = isConsecutiveDay(previous.completedAt, latest.completedAt, habit.user.timezone)\n        ? habit.currentStreak + 1\n        : 1;\n    }\n\n    await habitRepo.save(habit);\n  });\n}\n"
+  },
+  "result": "OK: wrote 1126 bytes to src/services/streakService.ts",
+  "tsIso": "2026-03-18T03:51:13.439Z"
+}

@@ -1,0 +1,9 @@
+{
+  "n": 37,
+  "tool": "listFiles",
+  "input": {
+    "glob": "src/**/*.ts"
+  },
+  "result": "src/middleware/error-handler.ts\nsrc/models/habit.ts\nsrc/models/user.ts\nsrc/routes/analytics.ts\nsrc/routes/completions.ts\nsrc/routes/habits.ts\nsrc/routes/reminders.ts\nsrc/routes/users.ts\nsrc/services/messaging-gateway.ts\nsrc/services/reminder-scheduler.ts\nsrc/services/sms-provider.ts\nsrc/services/telegram-provider.ts\nsrc/services/whatsapp-provider.ts\nsrc/types/node-telegram-bot-api.d.ts",
+  "tsIso": "2026-02-27T06:14:48.811Z"
+}

@@ -1,0 +1,10 @@
+{
+  "n": 16,
+  "tool": "writeFile",
+  "input": {
+    "path": "src/routes/progressRoutes.ts",
+    "content": "import { Router } from 'express';\nimport { AppDataSource } from '../db/connection';\nimport { HabitCompletion } from '../db/models';\nimport { AuthenticatedRequest } from '../middleware/auth';\n\nconst router = Router();\n\nrouter.get('/:habitId', async (req: AuthenticatedRequest, res) => {\n  const completionRepo = AppDataSource.getRepository(HabitCompletion);\n  const days = Number(req.query.days || 30);\n  const since = new Date();\n  since.setDate(since.getDate() - days);\n\n  const completions = await completionRepo.find({\n    where: {\n      habit: { id: req.params.habitId, user: { id: req.user!.id } },\n      completedAt: { $gte: since } as any\n    },\n    order: { completedAt: 'ASC' }\n  });\n\n  const data = completions.map((c) => ({ date: c.completedAt.toISOString().slice(0, 10), value: 1 }));\n  res.json({ habitId: req.params.habitId, days, data });\n});\n\nexport default router;\n"
+  },
+  "result": "OK: wrote 882 bytes to src/routes/progressRoutes.ts",
+  "tsIso": "2026-03-18T03:51:40.911Z"
+}

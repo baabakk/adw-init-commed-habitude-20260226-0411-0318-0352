@@ -1,0 +1,10 @@
+{
+  "n": 7,
+  "tool": "writeFile",
+  "input": {
+    "path": "src/adapters/telegramAdapter.ts",
+    "content": "export class TelegramAdapter {\n  async sendMessage(chatId: string, message: string): Promise<void> {\n    if (!chatId) throw new Error('Telegram chatId is required');\n    console.log(`[Telegram] Sending to ${chatId}: ${message}`);\n  }\n}\n"
+  },
+  "result": "OK: wrote 236 bytes to src/adapters/telegramAdapter.ts",
+  "tsIso": "2026-03-18T03:50:50.364Z"
+}

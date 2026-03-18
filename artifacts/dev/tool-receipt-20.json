@@ -1,0 +1,10 @@
+{
+  "n": 20,
+  "tool": "writeFile",
+  "input": {
+    "path": "frontend/main.tsx",
+    "content": "import React from 'react';\nimport { createRoot } from 'react-dom/client';\nimport App from './App';\n\ncreateRoot(document.getElementById('root')!).render(\n  <React.StrictMode>\n    <App />\n  </React.StrictMode>\n);\n"
+  },
+  "result": "OK: wrote 211 bytes to frontend/main.tsx",
+  "tsIso": "2026-03-18T03:51:52.703Z"
+}

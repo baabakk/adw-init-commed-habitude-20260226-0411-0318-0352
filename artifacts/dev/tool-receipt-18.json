@@ -1,0 +1,10 @@
+{
+  "n": 18,
+  "tool": "writeFile",
+  "input": {
+    "path": "src/index.ts",
+    "content": "import dotenv from 'dotenv';\nimport app from './app';\nimport { initializeDatabase } from './db/connection';\nimport { registerStreakHandlers } from './services/streakService';\n\ndotenv.config();\n\nconst PORT = Number(process.env.PORT || 4000);\n\nasync function bootstrap(): Promise<void> {\n  await initializeDatabase();\n  registerStreakHandlers();\n\n  app.listen(PORT, () => {\n    console.log(`Server running on port ${PORT}`);\n  });\n}\n\nbootstrap().catch((error) => {\n  console.error('Failed to start server', error);\n  process.exit(1);\n});\n"
+  },
+  "result": "OK: wrote 536 bytes to src/index.ts",
+  "tsIso": "2026-03-18T03:51:46.571Z"
+}

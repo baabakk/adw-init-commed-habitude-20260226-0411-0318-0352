@@ -1,0 +1,124 @@
+{
+  "techStack": "Node.js + Express + TypeScript backend with React frontend",
+  "entryPoint": "src/index.ts",
+  "files": [
+    {
+      "path": "package.json",
+      "purpose": "Defines project metadata, dependencies, and scripts for backend and frontend"
+    },
+    {
+      "path": "tsconfig.json",
+      "purpose": "TypeScript configuration for compilation and type checking"
+    },
+    {
+      "path": "src/index.ts",
+      "purpose": "Entry point for Express server, initializes routes, middleware, and database connection"
+    },
+    {
+      "path": "src/app.ts",
+      "purpose": "Main Express app setup: routes, JSON parsing, CORS, authentication middleware"
+    },
+    {
+      "path": "src/routes/habitRoutes.ts",
+      "purpose": "Implements Habit CRUD API endpoints with JWT authentication"
+    },
+    {
+      "path": "src/routes/reminderRoutes.ts",
+      "purpose": "Handles reminder schedule creation and management via Reminder Scheduler contract"
+    },
+    {
+      "path": "src/routes/progressRoutes.ts",
+      "purpose": "Serves progress data for charts via Progress Chart Data API"
+    },
+    {
+      "path": "src/services/streakService.ts",
+      "purpose": "Implements Streak Calculation Engine logic in response to HabitCompleted events"
+    },
+    {
+      "path": "src/services/reminderDeliveryService.ts",
+      "purpose": "Orchestrates reminder delivery using Messaging Platform Adapters"
+    },
+    {
+      "path": "src/adapters/smsAdapter.ts",
+      "purpose": "Messaging Platform Adapter for SMS using Twilio or similar provider"
+    },
+    {
+      "path": "src/adapters/telegramAdapter.ts",
+      "purpose": "Messaging Platform Adapter for Telegram via Bot API"
+    },
+    {
+      "path": "src/adapters/whatsappAdapter.ts",
+      "purpose": "Messaging Platform Adapter for WhatsApp via Twilio or official API"
+    },
+    {
+      "path": "src/events/eventEmitter.ts",
+      "purpose": "Event bus for emitting and handling internal events like HabitCompleted"
+    },
+    {
+      "path": "src/middleware/auth.ts",
+      "purpose": "JWT-based authentication middleware for protecting API routes"
+    },
+    {
+      "path": "src/db/models.ts",
+      "purpose": "PostgreSQL data models using TypeORM or Prisma for core entities (Habit, User, etc.)"
+    },
+    {
+      "path": "src/db/connection.ts",
+      "purpose": "Database connection setup and initialization for PostgreSQL"
+    },
+    {
+      "path": "src/utils/timezoneUtils.ts",
+      "purpose": "Handles timezone-aware scheduling and streak calculations across user timezones"
+    },
+    {
+      "path": "src/utils/retryLogic.ts",
+      "purpose": "Implements retry logic for failed message deliveries per ADR-003"
+    },
+    {
+      "path": "frontend/index.html",
+      "purpose": "Main HTML page for React frontend application"
+    },
+    {
+      "path": "frontend/main.tsx",
+      "purpose": "Entry point for React app, renders root component and sets up providers"
+    },
+    {
+      "path": "frontend/App.tsx",
+      "purpose": "Root React component consuming Habit CRUD API and Progress Chart Data API"
+    },
+    {
+      "path": "frontend/components/HabitForm.tsx",
+      "purpose": "UI for creating and editing habits (FR-01, FR-08)"
+    },
+    {
+      "path": "frontend/components/HabitList.tsx",
+      "purpose": "Displays user's habits with completion toggles and streaks (FR-10)"
+    },
+    {
+      "path": "frontend/components/ProgressChart.tsx",
+      "purpose": "Visualizes habit completion over time using lightweight chart library (FR-03)"
+    },
+    {
+      "path": "frontend/components/ReminderSettings.tsx",
+      "purpose": "Allows customization of reminder schedules per habit (FR-02)"
+    },
+    {
+      "path": "frontend/utils/apiClient.ts",
+      "purpose": "HTTP client for interacting with backend APIs with auth headers"
+    },
+    {
+      "path": "README.md",
+      "purpose": "Documentation: setup, run instructions, feature overview, and integration details"
+    }
+  ],
+  "runCommand": "npm run dev",
+  "constraints": [
+    "All services must communicate via REST APIs as per ADR-001",
+    "Streak updates must be event-driven using HabitCompleted events (ADR-002)",
+    "External messaging integrations must go through adapter layer (ADR-003)",
+    "PostgreSQL is the single source of truth for all core data (ADR-004)",
+    "JWT authentication required on all API endpoints",
+    "Reminder delivery must include retry logic and logging",
+    "Frontend must be React-based and consume defined API contracts"
+  ]
+}

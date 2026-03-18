@@ -1,0 +1,10 @@
+{
+  "n": 4,
+  "tool": "writeFile",
+  "input": {
+    "path": "src/utils/retryLogic.ts",
+    "content": "export async function withRetry<T>(\n  operation: () => Promise<T>,\n  retries = 3,\n  delayMs = 500\n): Promise<T> {\n  let lastError: unknown;\n\n  for (let attempt = 1; attempt <= retries; attempt += 1) {\n    try {\n      return await operation();\n    } catch (error) {\n      lastError = error;\n      if (attempt < retries) {\n        await new Promise((resolve) => setTimeout(resolve, delayMs * attempt));\n      }\n    }\n  }\n\n  throw lastError;\n}\n"
+  },
+  "result": "OK: wrote 441 bytes to src/utils/retryLogic.ts",
+  "tsIso": "2026-03-18T03:50:47.289Z"
+}

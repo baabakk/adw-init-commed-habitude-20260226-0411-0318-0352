@@ -1,0 +1,598 @@
+{
+  "version": "1.0",
+  "initiativeCore": {
+    "problemStatement": "Users lack a seamless, accessible way to track daily habits and personal goals with timely reminders and visual progress tracking across multiple communication channels.",
+    "goals": [
+      "Enable users to track daily habits and personal goals",
+      "Provide customizable reminders to support habit consistency",
+      "Visualize habit-building progress through intuitive charts",
+      "Deliver streak notifications to motivate continued engagement",
+      "Integrate with SMS, Telegram, and WhatsApp for multi-channel accessibility (one channel per user, selected at signup)",
+      "Support bi-directional communication allowing users to mark habits complete via messaging platforms"
+    ],
+    "nonGoals": [
+      "Social features or habit sharing between users (not in initial scope)",
+      "Advanced analytics or AI-powered habit recommendations (not in initial scope)",
+      "Integration with additional messaging platforms beyond SMS, Telegram, and WhatsApp",
+      "Multi-language support beyond English (not in initial scope)",
+      "Historical habit completion (backdating entries)",
+      "Complex authentication mechanisms beyond JWT",
+      "Changing messaging channel after signup"
+    ],
+    "businessImpact": "Success: Increased user engagement and retention through habit consistency features; potential for premium subscription revenue from advanced features. Failure: Low adoption if reminders are unreliable or integrations fail; user churn if progress tracking lacks value.",
+    "stakeholders": "Unknown - no stakeholders identified in brief"
+  },
+  "requirements": {
+    "functional": [
+      {
+        "id": "FR-01",
+        "description": "Users can create and manage custom daily habits (maximum 5 habits per user)",
+        "priority": "must"
+      },
+      {
+        "id": "FR-02",
+        "description": "Users can set and customize reminder schedules for each habit with flexible frequencies (daily, every 2 days, weekly, monthly, hourly intervals: 1h, 6h) and custom time-of-day schedules",
+        "priority": "must"
+      },
+      {
+        "id": "FR-03",
+        "description": "System displays progress charts visualizing habit completion over time",
+        "priority": "must"
+      },
+      {
+        "id": "FR-04",
+        "description": "System sends streak notifications when users maintain habit consistency",
+        "priority": "should"
+      },
+      {
+        "id": "FR-05",
+        "description": "System integrates with SMS for bi-directional reminder delivery and habit completion",
+        "priority": "must"
+      },
+      {
+        "id": "FR-06",
+        "description": "System integrates with Telegram for bi-directional reminder delivery and habit completion",
+        "priority": "must"
+      },
+      {
+        "id": "FR-07",
+        "description": "System integrates with WhatsApp for bi-directional reminder delivery and habit completion",
+        "priority": "must"
+      },
+      {
+        "id": "FR-08",
+        "description": "Users can mark habits as complete for each day via web interface",
+        "priority": "must"
+      },
+      {
+        "id": "FR-09",
+        "description": "Users can define personal goals associated with habits",
+        "priority": "should"
+      },
+      {
+        "id": "FR-10",
+        "description": "System tracks and displays current streak count per habit",
+        "priority": "should"
+      },
+      {
+        "id": "FR-11",
+        "description": "Users can mark habits as complete by replying to reminder messages on SMS, Telegram, or WhatsApp",
+        "priority": "must"
+      },
+      {
+        "id": "FR-12",
+        "description": "System enforces maximum limit of 5 habits per user",
+        "priority": "must"
+      },
+      {
+        "id": "FR-13",
+        "description": "System supports multiple reminder frequency options: daily, every 2 days, weekly, monthly, every 1 hour, every 6 hours",
+        "priority": "must"
+      },
+      {
+        "id": "FR-14",
+        "description": "System parses and processes incoming messages from users to mark habits complete",
+        "priority": "must"
+      },
+      {
+        "id": "FR-15",
+        "description": "System sends confirmation messages when habits are marked complete via messaging platforms",
+        "priority": "should"
+      },
+      {
+        "id": "FR-16",
+        "description": "Users must select one messaging channel (SMS, Telegram, or WhatsApp) during signup for receiving reminders",
+        "priority": "must"
+      },
+      {
+        "id": "FR-17",
+        "description": "System supports English language only for all messages and user interactions",
+        "priority": "must"
+      },
+      {
+        "id": "FR-18",
+        "description": "Habits can only be marked complete for the current day (no backdating or historical completion)",
+        "priority": "must"
+      },
+      {
+        "id": "FR-19",
+        "description": "Users can set custom time-of-day schedules with up to 12 times per day",
+        "priority": "must"
+      },
+      {
+        "id": "FR-20",
+        "description": "System implements JWT-based authentication for user sessions",
+        "priority": "must"
+      },
+      {
+        "id": "FR-21",
+        "description": "System prevents marking the same habit complete multiple times on the same day",
+        "priority": "must"
+      },
+      {
+        "id": "FR-22",
+        "description": "Users must select a timezone during signup which the system uses for all reminder scheduling and time-based operations",
+        "priority": "must"
+      },
+      {
+        "id": "FR-23",
+        "description": "System sends confirmation message in format '[Habit Name] Completed!' when habit is marked complete via messaging platform",
+        "priority": "must"
+      },
+      {
+        "id": "FR-24",
+        "description": "System persists habit data and streak information in database for long-term storage and retrieval",
+        "priority": "must"
+      },
+      {
+        "id": "FR-25",
+        "description": "Messaging channel selection is permanent and cannot be changed after signup",
+        "priority": "must"
+      }
+    ],
+    "nonFunctional": [
+      {
+        "id": "NFR-01",
+        "description": "Reminder delivery must be timely and reliable across all messaging platforms",
+        "priority": "must"
+      },
+      {
+        "id": "NFR-02",
+        "description": "User interface must be intuitive and require minimal learning curve",
+        "priority": "must"
+      },
+      {
+        "id": "NFR-03",
+        "description": "Progress charts must load and render within 2 seconds",
+        "priority": "should"
+      },
+      {
+        "id": "NFR-04",
+        "description": "System must be accessible on mobile and desktop web browsers",
+        "priority": "must"
+      },
+      {
+        "id": "NFR-05",
+        "description": "Platform must handle concurrent users without performance degradation",
+        "priority": "should"
+      },
+      {
+        "id": "NFR-06",
+        "description": "User data must be securely stored and transmitted",
+        "priority": "must"
+      },
+      {
+        "id": "NFR-07",
+        "description": "Bi-directional message processing must occur within 5 seconds of user reply",
+        "priority": "must"
+      },
+      {
+        "id": "NFR-08",
+        "description": "System must handle message parsing errors gracefully and provide helpful feedback",
+        "priority": "should"
+      },
+      {
+        "id": "NFR-09",
+        "description": "JWT tokens must be securely generated, validated, and refreshed",
+        "priority": "must"
+      },
+      {
+        "id": "NFR-10",
+        "description": "All user-facing messages must be in English with clear, consistent language",
+        "priority": "must"
+      },
+      {
+        "id": "NFR-11",
+        "description": "All reminder times must be calculated and delivered according to user's selected timezone",
+        "priority": "must"
+      },
+      {
+        "id": "NFR-12",
+        "description": "Database must reliably persist habit and streak data with appropriate backup and recovery mechanisms",
+        "priority": "must"
+      }
+    ],
+    "edgeCases": [
+      "Messaging platform API is temporarily unavailable during scheduled reminder time",
+      "User has multiple habits with overlapping reminder times",
+      "User deletes a habit with an active streak",
+      "User's phone number or messaging account becomes invalid",
+      "Streak calculation when user marks habit complete after midnight in their timezone",
+      "Chart rendering with incomplete or sparse habit data",
+      "User attempts to create duplicate habits",
+      "Rate limiting from messaging platform APIs during high-volume reminder periods",
+      "User attempts to create more than 5 habits",
+      "User replies with ambiguous or unrecognized text to mark habit complete",
+      "User marks same habit complete multiple times in same period",
+      "Reminder frequency conflicts (e.g., hourly reminders overlapping with daily reminders)",
+      "User replies to old reminder messages after new ones have been sent",
+      "Bi-directional message processing when webhook endpoints are down",
+      "Parsing replies in different languages or with typos",
+      "Handling rapid-fire replies from users across multiple habits",
+      "Monthly reminder scheduling across months with different day counts",
+      "User attempts to mark habit complete for past or future dates",
+      "Custom time schedules with times spanning across midnight in user's timezone",
+      "User sets overlapping custom times for the same habit",
+      "JWT token expiration during active user session",
+      "User attempts to mark already-completed habit as complete again on same day",
+      "User sets exactly 12 custom times and attempts to add more",
+      "User changes custom time schedule while reminders are pending",
+      "Timezone edge cases: DST transitions, timezone boundaries at midnight",
+      "Database connection failures during habit completion or streak updates",
+      "User signup with invalid or unsupported timezone",
+      "Confirmation message delivery failure after successful habit completion",
+      "User attempts to change messaging channel after signup (should be prevented)",
+      "Habit data corruption or inconsistency in database",
+      "Multiple simultaneous habit completions from different devices",
+      "Custom time schedule validation with times in different formats (12h vs 24h)",
+      "Reminder scheduling when user's timezone differs significantly from server timezone"
+    ]
+  },
+  "acceptanceCriteria": {
+    "criteria": [
+      {
+        "id": "AC-01",
+        "description": "User can successfully create a new habit with custom name and reminder schedule from available frequency options",
+        "testable": true,
+        "priority": "P0"
+      },
+      {
+        "id": "AC-02",
+        "description": "User receives reminder notification via selected messaging platform at scheduled time according to their timezone",
+        "testable": true,
+        "priority": "P0"
+      },
+      {
+        "id": "AC-03",
+        "description": "Progress chart displays accurate completion data for the past 30 days",
+        "testable": true,
+        "priority": "P0"
+      },
+      {
+        "id": "AC-04",
+        "description": "Streak notification is sent when user completes habit for 3 consecutive days",
+        "testable": true,
+        "priority": "P1"
+      },
+      {
+        "id": "AC-05",
+        "description": "User can mark a habit as complete and see updated streak count immediately",
+        "testable": true,
+        "priority": "P0"
+      },
+      {
+        "id": "AC-06",
+        "description": "User interface is intuitive and easy to navigate",
+        "testable": false,
+        "priority": "P1"
+      },
+      {
+        "id": "AC-07",
+        "description": "All three messaging platforms (SMS, Telegram, WhatsApp) successfully deliver reminders",
+        "testable": true,
+        "priority": "P0"
+      },
+      {
+        "id": "AC-08",
+        "description": "User can customize reminder frequency and time for each habit independently using supported frequencies",
+        "testable": true,
+        "priority": "P0"
+      },
+      {
+        "id": "AC-09",
+        "description": "App empowers users to cultivate positive habits effortlessly",
+        "testable": false,
+        "priority": "P2"
+      },
+      {
+        "id": "AC-10",
+        "description": "User can reply to reminder message on SMS, Telegram, or WhatsApp to mark habit complete",
+        "testable": true,
+        "priority": "P0"
+      },
+      {
+        "id": "AC-11",
+        "description": "System prevents user from creating more than 5 habits and displays appropriate error message",
+        "testable": true,
+        "priority": "P0"
+      },
+      {
+        "id": "AC-12",
+        "description": "System correctly processes bi-directional messages and updates habit status within 5 seconds",
+        "testable": true,
+        "priority": "P0"
+      },
+      {
+        "id": "AC-13",
+        "description": "User receives confirmation message in format '[Habit Name] Completed!' after successfully marking habit complete via messaging platform",
+        "testable": true,
+        "priority": "P0"
+      },
+      {
+        "id": "AC-14",
+        "description": "System supports all specified reminder frequencies: daily, every 2 days, weekly, monthly, every 1 hour, every 6 hours",
+        "testable": true,
+        "priority": "P0"
+      },
+      {
+        "id": "AC-15",
+        "description": "User must select one messaging channel during signup and cannot change it afterward",
+        "testable": true,
+        "priority": "P0"
+      },
+      {
+        "id": "AC-16",
+        "description": "All system messages and user interface text are displayed in English only",
+        "testable": true,
+        "priority": "P0"
+      },
+      {
+        "id": "AC-17",
+        "description": "System prevents marking habits complete for past or future dates, only allowing current day completion",
+        "testable": true,
+        "priority": "P0"
+      },
+      {
+        "id": "AC-18",
+        "description": "User can set custom time-of-day schedule with up to 12 times per day and receive reminders at each specified time in their timezone",
+        "testable": true,
+        "priority": "P0"
+      },
+      {
+        "id": "AC-19",
+        "description": "User can authenticate using JWT token and maintain session across requests",
+        "testable": true,
+        "priority": "P0"
+      },
+      {
+        "id": "AC-20",
+        "description": "System prevents duplicate completion of the same habit on the same day",
+        "testable": true,
+        "priority": "P0"
+      },
+      {
+        "id": "AC-21",
+        "description": "User selects a timezone during signup and all reminders are scheduled according to that timezone",
+        "testable": true,
+        "priority": "P0"
+      },
+      {
+        "id": "AC-22",
+        "description": "System enforces maximum of 12 custom times per habit and prevents adding more",
+        "testable": true,
+        "priority": "P0"
+      },
+      {
+        "id": "AC-23",
+        "description": "Habit and streak data persists correctly in database and survives system restarts",
+        "testable": true,
+        "priority": "P0"
+      }
+    ],
+    "measurableOutcomes": [
+      "Percentage of users who maintain 7-day streaks",
+      "Reminder delivery success rate per messaging platform",
+      "User retention rate after 30 days",
+      "Average number of habits tracked per active user (target: 3-5)",
+      "Time to complete first habit creation flow",
+      "Chart load time performance metrics",
+      "Bi-directional message processing success rate",
+      "Percentage of habits marked complete via messaging vs web interface",
+      "Average response time for bi-directional message processing",
+      "Custom time schedule adoption rate (percentage of users using custom times vs preset frequencies)",
+      "JWT token validation success rate",
+      "Percentage of users utilizing custom time schedules vs preset frequencies",
+      "Database query performance for habit and streak retrieval",
+      "Confirmation message delivery success rate",
+      "Timezone-related reminder accuracy (percentage of reminders delivered within 1 minute of scheduled time)",
+      "Distribution of messaging channel selection at signup (SMS vs Telegram vs WhatsApp)",
+      "Average number of custom times set per habit (target: 2-6 out of maximum 12)"
+    ]
+  },
+  "risksAndDependencies": {
+    "internalDependencies": [
+      "Backend infrastructure for habit data storage and retrieval",
+      "Database system for persisting habit and streak data with backup capabilities",
+      "Reminder scheduling and notification service supporting custom time schedules with timezone awareness",
+      "Chart rendering library or component",
+      "User authentication and authorization system with JWT implementation",
+      "Mobile-responsive web design framework",
+      "Bi-directional message processing engine",
+      "Webhook infrastructure for receiving incoming messages",
+      "Message parsing and natural language processing logic (English only)",
+      "Habit limit enforcement logic (5 habits maximum)",
+      "Messaging channel selection logic during signup",
+      "Current-day-only completion validation logic",
+      "Custom time schedule parser and validator (maximum 12 times)",
+      "Duplicate completion prevention logic",
+      "Timezone selection and storage during signup",
+      "Timezone-aware reminder scheduling engine",
+      "Confirmation message formatter ('[Habit Name] Completed!' format)",
+      "Database schema for habit, streak, and user timezone data"
+    ],
+    "externalDependencies": [
+      {
+        "name": "SMS Gateway Provider (e.g., Twilio, AWS SNS)",
+        "type": "service",
+        "risk": "high"
+      },
+      {
+        "name": "Telegram Bot API",
+        "type": "api",
+        "risk": "medium"
+      },
+      {
+        "name": "WhatsApp Business API",
+        "type": "api",
+        "risk": "high"
+      },
+      {
+        "name": "Messaging platform rate limits and quotas",
+        "type": "service",
+        "risk": "high"
+      },
+      {
+        "name": "Third-party charting library",
+        "type": "library",
+        "risk": "low"
+      },
+      {
+        "name": "Webhook reliability for bi-directional messaging",
+        "type": "service",
+        "risk": "high"
+      },
+      {
+        "name": "SMS provider inbound message processing capabilities",
+        "type": "service",
+        "risk": "medium"
+      },
+      {
+        "name": "JWT library for token generation and validation",
+        "type": "library",
+        "risk": "low"
+      },
+      {
+        "name": "Database system (e.g., PostgreSQL, MySQL, MongoDB)",
+        "type": "service",
+        "risk": "medium"
+      },
+      {
+        "name": "Timezone database and library for accurate timezone handling",
+        "type": "library",
+        "risk": "low"
+      }
+    ],
+    "riskClassification": {
+      "score": 58,
+      "factors": [
+        "Critical sections missing: stakeholders, timeline, budget, constraints",
+        "No defined success metrics or KPIs beyond basic outcomes",
+        "No stakeholder identification or approval process",
+        "No timeline or delivery milestones specified",
+        "No budget constraints or resource allocation defined",
+        "High dependency on external messaging APIs with potential rate limits and costs",
+        "Bi-directional messaging adds complexity to webhook infrastructure and message parsing",
+        "No technical constraints or architecture decisions documented beyond JWT authentication and database",
+        "Unclear scope boundaries for MVP features beyond core functionality",
+        "No rollout or phasing strategy defined",
+        "Potential compliance requirements for SMS/messaging not addressed",
+        "Webhook reliability concerns for bi-directional communication",
+        "Cost implications of bi-directional SMS messaging not assessed",
+        "Custom time schedule complexity with up to 12 irregular intervals per habit",
+        "Timezone handling complexity across different user timezones and DST transitions",
+        "Database persistence requirements without defined backup/recovery strategy",
+        "Permanent messaging channel selection may frustrate users who want to switch"
+      ],
+      "mitigations": [
+        "Define clear MVP scope with prioritized features (5 habit limit reduces initial complexity)",
+        "Establish stakeholder review and approval process",
+        "Document technical architecture and API integration strategy for bi-directional messaging",
+        "Create detailed timeline with milestones and dependencies",
+        "Assess messaging platform costs including bi-directional SMS charges and rate limits before commitment",
+        "Define measurable success criteria and KPIs",
+        "Identify compliance requirements for messaging integrations",
+        "Establish fallback mechanisms for messaging platform failures and webhook downtime",
+        "Define budget for external API usage including inbound message processing",
+        "Implement robust message parsing with clear user instructions and error handling (English only simplifies parsing)",
+        "Design webhook infrastructure with retry logic and monitoring",
+        "Create simple, standardized reply formats to reduce parsing complexity",
+        "Implement rate limiting and queue management for bi-directional messages",
+        "Test bi-directional flows extensively across all three platforms before launch",
+        "Single channel per user reduces API complexity and costs",
+        "Current-day-only completion simplifies data model and reduces edge cases",
+        "JWT authentication provides simple, stateless security model",
+        "Validate custom time schedules to prevent excessive reminder frequency (12 time maximum enforced)",
+        "English-only support reduces localization complexity and accelerates development",
+        "Timezone selection at signup simplifies ongoing timezone management",
+        "Standardized confirmation message format ('[Habit Name] Completed!') simplifies implementation",
+        "Database persistence provides reliable data storage with established backup patterns",
+        "Permanent channel selection eliminates channel-switching complexity and edge cases",
+        "Use established timezone libraries (e.g., moment-timezone, pytz) for reliable timezone handling",
+        "Implement database backup and recovery procedures following industry best practices",
+        "Document clear messaging channel selection UX to set user expectations at signup",
+        "Limit custom times to 12 to balance flexibility with system complexity and API costs",
+        "Test timezone edge cases thoroughly including DST transitions and midnight boundaries"
+      ]
+    }
+  },
+  "deliveryIntent": {
+    "releaseScope": "mvp",
+    "rolloutExpectations": "Unknown - no rollout strategy defined in brief",
+    "timelineAssumptions": "Unknown - no timeline provided in brief",
+    "constraints": [
+      "Maximum 5 habits per user to limit initial complexity and API costs",
+      "Bi-directional messaging must be supported across all three platforms (SMS, Telegram, WhatsApp)",
+      "Reminder frequencies limited to: daily, every 2 days, weekly, monthly, every 1 hour, every 6 hours, plus custom time-of-day schedules",
+      "Social features explicitly excluded from initial scope",
+      "One messaging channel per user selected at signup (no channel switching allowed)",
+      "English language only for all messages and UI",
+      "No historical habit completion (current day only)",
+      "JWT-based authentication only",
+      "No backdating or future-dating of habit completions",
+      "Maximum 12 custom times per habit per day",
+      "User must select timezone during signup (used for all reminder scheduling)",
+      "Confirmation messages must follow format: '[Habit Name] Completed!'",
+      "Habit and streak data must be persisted in database",
+      "Messaging channel selection is permanent and cannot be changed after signup"
+    ],
+    "budget": "Unknown - no budget specified in brief"
+  },
+  "metadata": {
+    "confidenceMap": {
+      "initiativeCore": "confirmed",
+      "requirements": "confirmed",
+      "acceptanceCriteria": "confirmed",
+      "risksAndDependencies": "confirmed",
+      "deliveryIntent": "confirmed"
+    },
+    "gaps": [
+      "No stakeholders identified",
+      "No timeline or milestones specified",
+      "No budget or resource allocation defined",
+      "No rollout or phasing strategy",
+      "No compliance or regulatory requirements addressed for messaging",
+      "No user personas or target audience defined",
+      "No competitive analysis or market positioning",
+      "No data retention or privacy policies specified",
+      "No API cost estimates or usage projections for bi-directional messaging",
+      "No disaster recovery or failover strategy",
+      "No accessibility standards or requirements defined",
+      "No performance benchmarks or SLAs specified beyond chart load time and message processing",
+      "No webhook infrastructure requirements or SLAs specified",
+      "No JWT token expiration or refresh strategy defined",
+      "No user onboarding or tutorial flow defined",
+      "No analytics or monitoring requirements specified",
+      "No error logging or debugging strategy",
+      "No definition of acceptable reply formats for marking habits complete",
+      "No database backup frequency or retention policy defined",
+      "No database technology or architecture specified",
+      "No timezone validation rules or supported timezone list defined",
+      "No DST handling strategy documented",
+      "No strategy for users who want to change messaging channel (support process, workarounds)",
+      "No definition of what happens to pending reminders when habit is deleted",
+      "No rate limiting strategy for custom time schedules with 12 times per day",
+      "No definition of reminder retry logic if initial delivery fails",
+      "No specification of how timezone affects 'current day' determination for habit completion"
+    ]
+  }
+}

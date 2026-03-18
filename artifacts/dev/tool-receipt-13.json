@@ -1,0 +1,10 @@
+{
+  "n": 13,
+  "tool": "writeFile",
+  "input": {
+    "path": "src/services/reminderDeliveryService.ts",
+    "content": "import { SmsAdapter } from '../adapters/smsAdapter';\nimport { TelegramAdapter } from '../adapters/telegramAdapter';\nimport { WhatsAppAdapter } from '../adapters/whatsappAdapter';\nimport { withRetry } from '../utils/retryLogic';\n\nconst smsAdapter = new SmsAdapter();\nconst telegramAdapter = new TelegramAdapter();\nconst whatsappAdapter = new WhatsAppAdapter();\n\nexport type ReminderChannel = 'sms' | 'telegram' | 'whatsapp';\n\nexport async function deliverReminder(\n  channel: ReminderChannel,\n  recipient: string,\n  message: string\n): Promise<void> {\n  const send = async (): Promise<void> => {\n    switch (channel) {\n      case 'sms':\n        await smsAdapter.sendMessage(recipient, message);\n        break;\n      case 'telegram':\n        await telegramAdapter.sendMessage(recipient, message);\n        break;\n      case 'whatsapp':\n        await whatsappAdapter.sendMessage(recipient, message);\n        break;\n      default:\n        throw new Error(`Unsupported channel: ${channel}`);\n    }\n  };\n\n  try {\n    await withRetry(send, 3, 1000);\n    console.log(`Reminder delivered via ${channel} to ${recipient}`);\n  } catch (error) {\n    console.error(`Reminder delivery failed via ${channel} to ${recipient}`, error);\n    throw error;\n  }\n}\n"
+  },
+  "result": "OK: wrote 1239 bytes to src/services/reminderDeliveryService.ts",
+  "tsIso": "2026-03-18T03:51:19.142Z"
+}

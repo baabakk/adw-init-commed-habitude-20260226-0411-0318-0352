@@ -1,0 +1,10 @@
+{
+  "n": 24,
+  "tool": "writeFile",
+  "input": {
+    "path": "frontend/components/ProgressChart.tsx",
+    "content": "import React from 'react';\n\ntype Point = { date: string; value: number };\n\ntype Props = { data: Point[] };\n\nexport default function ProgressChart({ data }: Props): JSX.Element {\n  const max = Math.max(1, ...data.map((d) => d.value));\n\n  return (\n    <div className=\"card\">\n      <h3>Progress (Last 30 Days)</h3>\n      <div style={{ display: 'flex', alignItems: 'flex-end', gap: 4, height: 120 }}>\n        {data.map((point) => (\n          <div\n            key={point.date}\n            title={`${point.date}: ${point.value}`}\n            style={{\n              width: 10,\n              height: `${(point.value / max) * 100}%`,\n              background: '#10b981',\n              borderRadius: 2\n            }}\n          />\n        ))}\n      </div>\n    </div>\n  );\n}\n"
+  },
+  "result": "OK: wrote 763 bytes to frontend/components/ProgressChart.tsx",
+  "tsIso": "2026-03-18T03:52:06.384Z"
+}

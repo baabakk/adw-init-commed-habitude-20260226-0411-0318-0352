@@ -1,0 +1,10 @@
+{
+  "n": 22,
+  "tool": "writeFile",
+  "input": {
+    "path": "frontend/components/HabitForm.tsx",
+    "content": "import React, { useState } from 'react';\n\ntype Props = {\n  onCreate: (payload: { name: string; goal?: string }) => Promise<void>;\n};\n\nexport default function HabitForm({ onCreate }: Props): JSX.Element {\n  const [name, setName] = useState('');\n  const [goal, setGoal] = useState('');\n\n  const submit = async (e: React.FormEvent) => {\n    e.preventDefault();\n    if (!name.trim()) return;\n    await onCreate({ name: name.trim(), goal: goal.trim() || undefined });\n    setName('');\n    setGoal('');\n  };\n\n  return (\n    <form className=\"card\" onSubmit={submit}>\n      <h3>Create Habit</h3>\n      <input value={name} onChange={(e) => setName(e.target.value)} placeholder=\"Habit name\" required />\n      <input value={goal} onChange={(e) => setGoal(e.target.value)} placeholder=\"Goal (optional)\" />\n      <button type=\"submit\">Add Habit</button>\n    </form>\n  );\n}\n"
+  },
+  "result": "OK: wrote 860 bytes to frontend/components/HabitForm.tsx",
+  "tsIso": "2026-03-18T03:51:59.393Z"
+}

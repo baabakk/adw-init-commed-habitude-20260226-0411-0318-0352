@@ -1,0 +1,10 @@
+{
+  "n": 11,
+  "tool": "writeFile",
+  "input": {
+    "path": "src/middleware/auth.ts",
+    "content": "import { NextFunction, Request, Response } from 'express';\nimport jwt from 'jsonwebtoken';\n\nexport interface AuthenticatedRequest extends Request {\n  user?: { id: string; email: string };\n}\n\nexport function authMiddleware(req: AuthenticatedRequest, res: Response, next: NextFunction): void {\n  const authHeader = req.headers.authorization;\n  if (!authHeader?.startsWith('Bearer ')) {\n    res.status(401).json({ error: 'Missing or invalid authorization header' });\n    return;\n  }\n\n  const token = authHeader.split(' ')[1];\n  try {\n    const payload = jwt.verify(token, process.env.JWT_SECRET || 'dev-secret') as {\n      id: string;\n      email: string;\n    };\n    req.user = { id: payload.id, email: payload.email };\n    next();\n  } catch {\n    res.status(401).json({ error: 'Invalid token' });\n  }\n}\n"
+  },
+  "result": "OK: wrote 801 bytes to src/middleware/auth.ts",
+  "tsIso": "2026-03-18T03:51:08.998Z"
+}
